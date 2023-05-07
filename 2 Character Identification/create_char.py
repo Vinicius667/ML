@@ -1,19 +1,12 @@
-#% GERACHAR - ANN OCR 
-#% 
-#% ICIN/UnB Ago/2018 - Adolfo Bauchspiess
-#% Generate Training Patterns 9x7
-
+# Modified code from Adolfo Bauchspiess (http://www2.ene.unb.br/adolfo/)
 
 import numpy as np
-import time
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import matplotlib.cm as cm
-import matplotlib.lines as lines
 
 
-def geraChar():
-    P=np.zeros((63,16),dtype=int);
+def createChar():
+    P=np.zeros((63,16),dtype=int)
     P[:,0]=[			#0
     0,0,1,1,1,0,0,
     0,1,0,0,0,1,0,
@@ -196,7 +189,7 @@ def geraChar():
     return P
 
 
-def gchar_ruido(P, Ruido):
+def char_noise(P, Ruido):
 # Adds noide to the pattern P
 # Returns the noise pattern Pn
 
@@ -222,13 +215,7 @@ def gchar_ruido(P, Ruido):
         
     return Pn
 
-def copia(x):
-    y=x
-    return y
 
-def copiaV(P):
-    f=np.vectorize(copia)
-    return f(P)
 
 def complement(x):
     return -x+1
@@ -248,26 +235,3 @@ def showChar(P):
         plt.axis('off')    
     plt.show()
     return
-"""
-def validacao(Pn,net):
-# calculate the output of the net for a given noise Patterns Pn
-# bincon - incorrect Chars; idx - the recognized pattern (should be range(16))
-
-    m=[]
-    idx=[]
-
-    # calculate predictions
-    predictions = net.predict(Pn)
-    for k in range(16):
-       p = predictions[k,:]
-       m.append(np.max(p))
-       idx.append(np.argmax(p))
-    
-    # calculate number or incorrect characters
-    bincor = 0; 
-    for i in range(16): 
-        if idx[i] <> i: bincor +=1;
-            
-    return (bincor,idx)   
-
-"""
